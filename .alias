@@ -1,0 +1,4 @@
+alias dc='docker-compose -f ~/raspberry-media-server/docker-compose.yml '
+alias dclogs='docker-compose -f ~/raspberry-media-server/docker-compose.yml logs -tf --tail="50" '
+alias df='df -h -x aufs -x tmpfs -x udev'
+alias editle='sudo vi /opt/appdata/letsencrypt/nginx/site-confs/default'
