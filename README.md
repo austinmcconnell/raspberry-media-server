@@ -34,6 +34,28 @@ ssh pirate@192.168.178.10
 
 Default password is `hypriot`. **CHANGE IT**.
 
+### Docker Compose Aliases
+
+Add the following aliases to `~/.bash_profile`
+
+```
+alias dc='docker-compose -f /opt/docker-compose.yml '
+alias dclogs='docker-compose -f /opt/docker-compose.yml logs -tf --tail="50" '
+alias df='df -h -x aufs -x tmpfs -x udev'
+alias editle='sudo vi /opt/appdata/letsencrypt/nginx/site-confs/default'
+```
+
+Then, to start all docker container in the docker compose file, simply type
+
+```bash
+$ dc up -d
+```
+
+To view the logs, type
+
+```bash
+$ dclogs
+```
 
 ## Create appdata directory
 
