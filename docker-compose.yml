@@ -1,0 +1,35 @@
+---
+version: "3"
+services:
+  letsencrypt:
+    image: lsioarmhf/letsencrypt
+    container_name: le
+    ports:
+      - 443:443
+    volumes:
+      - /opt/appdata/letsencrypt:/config
+    restart: always
+    depends_on:
+      - plex
+      - plexpy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - EMAIL=austin.s.mcconnell@gmail.com
+      - URL=example.com
+      - SUBDOMAINS=sub
+      - ONLY_SUBDOMAINS=true
+      - DHLEVEL=2048
+      - TZ=America/Chicago
+  plex:
+    image: lsioarmhf/plex
+    container_name: plex
+    volumes:
+      - /opt/appdata/plex:/config
+      - /mnt/usb/movies:/data/movies
+      - /mnt/usb/tvshows:/data/tvshows
+    network_mode: host
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
