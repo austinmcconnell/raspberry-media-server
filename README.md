@@ -11,6 +11,29 @@ The following applications are run using Docker:
 
 Follow the setup instructions [here](https://blog.hypriot.com/getting-started-with-docker-and-mac-on-the-raspberry-pi/) to flash Hpyriot OS to your sd card
 
+## SSH into Server
+
+First identify the IP address of your own workstation. Type
+
+```bash
+$ ipconfig getifaddr en1
+192.168.1.100
+```
+
+Then replace the IP address in front of the /24 with yours and type
+
+```bash
+$ nmap -sP 192.168.1.100/24 | grep black-pearl
+```
+
+Finally, ssh into the server
+
+```bash
+ssh pirate@192.168.178.10
+```
+
+Default password is `hypriot`. **CHANGE IT**.
+
 
 ## Create appdata directory
 
@@ -19,7 +42,6 @@ Create appdata directory
 ```bash
 $ cd /opt
 $ sudo mkdir appdata
-$
 ```
 
 By default it will be owned by the root user.
