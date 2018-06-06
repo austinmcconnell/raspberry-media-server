@@ -178,14 +178,13 @@ $ git clone https://github.com/austinmcconnell/raspberry-media-server
 
 ### Docker-compose aliases
 
-Add the following aliases to `~/.bash_profile`
+Add the following line to `~/.bash_profile`
 
 ```
-alias dc='docker-compose -f /home/pirate/raspberry-media-server/docker-compose.yml '
-alias dclogs='docker-compose -f /home/pirate/raspberry-media-server/docker-compose.yml logs -tf --tail="50" '
-alias df='df -h -x aufs -x tmpfs -x udev'
-alias editle='sudo vi /opt/appdata/letsencrypt/nginx/site-confs/default'
+source ~/raspberry-media-server/.alias
 ```
+
+to use the aliases listed in [this](.alias) file.
 
 Then, start all docker containers in the docker compose file.
 
