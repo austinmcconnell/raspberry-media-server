@@ -34,29 +34,6 @@ ssh pirate@192.168.178.10
 
 Default password is `hypriot`. **CHANGE IT**.
 
-### Docker Compose Aliases
-
-Add the following aliases to `~/.bash_profile`
-
-```
-alias dc='docker-compose -f /opt/docker-compose.yml '
-alias dclogs='docker-compose -f /opt/docker-compose.yml logs -tf --tail="50" '
-alias df='df -h -x aufs -x tmpfs -x udev'
-alias editle='sudo vi /opt/appdata/letsencrypt/nginx/site-confs/default'
-```
-
-Then, to start all docker container in the docker compose file, simply type
-
-```bash
-$ dc up -d
-```
-
-To view the logs, type
-
-```bash
-$ dclogs
-```
-
 ## Create appdata directory
 
 Create appdata directory
@@ -163,11 +140,11 @@ You can now leave the disk plugged into your Raspberry Pi and it’ll automatica
 
 Simply install the Netatalk package on your Raspberry Pi.
 
-``bash
+```bash
 $ sudo apt-get install netatalk
 ```
 
-Edit the /etc/netatalk/AppleVolumes.default. Add the /mnt/usb disk to the list of exported file systems. The easiest way to do this is just to append it near the bottom after the entry for ~/.
+Edit the /etc/netatalk/AppleVolumes.default. Add the /mnt/usb disk to the list of exported file systems. The easiest way to do this is just to append it near the bottom after the entry for `~/`.
 
 ```bash
 $ sudo nano /etc/netatalk/AppleVolumes.default
@@ -179,7 +156,8 @@ By default all users have access to their home directories.
 ~/                      "Home Directory"
 /mnt/usb                "Network Disk"
 ```
-If you want to you can also remove the entire for ~/ which will mean that the only disk exported is our external drive. Afterwards go ahead and restart the Netatalk daemon.
+
+If you want to you can also remove the entire for `~/` which will mean that the only disk exported is our external drive. Afterwards go ahead and restart the Netatalk daemon.
 
 ```bash
 $ sudo /etc/init.d/netatalk restart
@@ -189,11 +167,37 @@ You should now be exporting the drive via AFS.
 ### Mounting the Disk from your Mac
 Going to your Mac your Raspberry Pi should now show up in the left-hand panel of the Finder. Click on it, and then the ‘Connect As…’ button.
 
-## Clone git repo
 
-TODO: Fill in!
+## Clone repository
 
-### Add bash aliases
+In your home folder, clone this repository.
+
+```bash
+$ git clone https://github.com/austinmcconnell/raspberry-media-server
+```
+
+### Docker-compose aliases
+
+Add the following aliases to `~/.bash_profile`
+
+```
+alias dc='docker-compose -f /home/pirate/raspberry-media-server/docker-compose.yml '
+alias dclogs='docker-compose -f /home/pirate/raspberry-media-server/docker-compose.yml logs -tf --tail="50" '
+alias df='df -h -x aufs -x tmpfs -x udev'
+alias editle='sudo vi /opt/appdata/letsencrypt/nginx/site-confs/default'
+```
+
+Then, start all docker containers in the docker compose file.
+
+```bash
+$ dc up -d
+```
+
+To view the logs, type
+
+```bash
+$ dclogs
+```
 
 ## Set Up Plex
 
