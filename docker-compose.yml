@@ -20,7 +20,7 @@ services:
       - plex
     volumes:
       - /opt/appdata/tautulli:/config
-      - /opt/appdata/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro
+      - /opt/appdata/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro
     network_mode: host
     restart: unless-stopped
     environment:
