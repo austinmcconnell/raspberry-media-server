@@ -22,6 +22,7 @@ services:
       - SUBDOMAINS=pi
       - ONLY_SUBDOMAINS=true
       - DHLEVEL=2048
+      - VALIDATION=http
       - TZ=America/Chicago
   plex:
     image: lsioarmhf/plex
