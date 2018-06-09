@@ -198,9 +198,29 @@ To view the logs, type
 $ dclogs
 ```
 
-## Set Up Plex
+## Domain Forwarding
 
-TODO: Fill in!
+### Forward (sub)domain 
 
-- Must manually add libraries from mounted volume on container.
-- Must select "automatically scan library folders" in preferences.
+If you don't already have a domain name (or have a new one in mind), I recommend [Hover](https://hover.com/nTDq8IDa) for all domain name needs. They offer free privacy on all their domain names which protects your information (name, address, etc)
+
+Access the DNS record of the domain you wish to forward. For Hover, that's Account -> Domains -> (select domain to edit) -> DNS. You'll see something like this.
+
+![](images/domain_add_a_record.jpg)
+
+In my case, I only wanted to forward a subdomain (`pi.austinmcconnell.me`) to my media server, so I added an A record to the list with a hostname of `pi` and the value of my public ip address. If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` instead.
+
+For help finding your public IP address, [this](https://www.whatismyip.com/) is a helpful website. You'll want the IPv4 address.
+
+
+### Forward ports from router to Raspberry Pi
+
+This part is highly specific to your individual router. Google around for instructions/tutorials for your specific router's make and model.
+
+You're looking for something like this.
+
+![](images/port_forwarding.png)
+
+Forward both ports `80` and `443` to your Raspberry Pi.
+
+
