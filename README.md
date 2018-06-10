@@ -224,3 +224,16 @@ You're looking for something like this.
 Forward both ports `80` and `443` to your Raspberry Pi.
 
 
+## Plex Setup
+
+TODO: Fill in!
+
+## Tautulli Setup
+
+Go through the welcome screens to configure. Mostly, just enter your plex username and password and pick which plex server you want to track.
+
+### Enable reverse proxy
+
+Settings -> Web Intervace -> Show Advanced
+
+Set the `HTTP Root` to `/tautulli` and check the box for `Enable HTTP Proxy`
