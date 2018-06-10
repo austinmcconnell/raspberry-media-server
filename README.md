@@ -237,3 +237,12 @@ Go through the welcome screens to configure. Mostly, just enter your plex userna
 Settings -> Web Intervace -> Show Advanced
 
 Set the `HTTP Root` to `/tautulli` and check the box for `Enable HTTP Proxy`
+
+SSH into your Raspberry Pi. Once, there enable the tautulli sample conf file provided.
+
+```bash
+$ cd /opt/appdata/letsencrypt/nginx/proxy-confs
+$ mv tautulli.subfolder.conf.sample tautulli.subfolder.conf
+```
+ 
+ 
