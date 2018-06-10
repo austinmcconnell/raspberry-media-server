@@ -1,0 +1,33 @@
+server {
+        listen 80;
+        server_name _;
+        return 301 https://$host$request_uri;
+}
+
+server {
+        listen 443 ssl default_server;
+        
+        server_name _;
+
+        include /config/nginx/proxy-confs/*.subfolder.conf;
+        include /config/nginx/ssl.conf;
+
+        client_max_body_size 0;
+
+        location / {
+                try_files $uri $uri/ /index.html /index.php?$args =404;
+        }
+
+        location ~ \.php$ {
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                # With php7-cgi alone:
+                fastcgi_pass 127.0.0.1:9000;
+                # With php7-fpm:
+                #fastcgi_pass unix:/var/run/php7-fpm.sock;
+                fastcgi_index index.php;
+                include /etc/nginx/fastcgi_params;
+        }
+
+}
+
+include /config/nginx/proxy-confs/*.subdomain.conf;
