@@ -4,7 +4,9 @@ This installation is build on top of [Hypriot OS](https://hypriot.com/) which ha
 
 The following applications are run using Docker:
 
+- LetsEncrypt
 - Plex
+- Tautulli
 
 
 ## Flash OS to SD Card
@@ -34,7 +36,9 @@ ssh pirate@192.168.178.10
 
 Default password is `hypriot`. **CHANGE IT**.
 
-## Create appdata directory
+## Create config directories
+
+### Create appdata directory
 
 Create appdata directory
 
@@ -68,6 +72,14 @@ drwxr-xr-x 2 pirate pirate 4096 Jun  6 01:31 appdata
 drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 ```
 
+### Create application directories
+
+`cd` to `appdata/` directory and make individual application directories
+
+```bash
+cd appdata/
+mkdir letsencrypt plex tautulli
+```
 
 ## Mount A Network Disk
 
