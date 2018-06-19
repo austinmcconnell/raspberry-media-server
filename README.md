@@ -34,7 +34,11 @@ Finally, ssh into the server
 ssh pirate@192.168.178.10
 ```
 
-Default password is `hypriot`. **CHANGE IT**.
+Default password is `hypriot`. **CHANGE IT**. Simply type the following command and you'll be able to change your password
+
+```bash
+$ passwd
+```
 
 ## Create config directories
 
