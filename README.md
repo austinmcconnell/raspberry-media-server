@@ -135,7 +135,18 @@ $ sudo umount /dev/sdaN
 ```bash
 $ sudo mkdir /mnt/usb
 $ sudo chown -R pirate:pirate /mnt/usb
+```
+
+For FAT32 formatted drives, manually mount with the following command
+
+```bash
 $ sudo mount /dev/sdaN /mnt/usb -o uid=pirate,gid=pirate
+```
+
+For ext formatted drives, the user and group are determined by the folder permissions so they must be drop from any mount commmands.
+
+```bash
+$ sudo mount /dev/sdaN /mnt/usb
 ```
 
 If you want it to automatically mount on boot you’ll need to append the following to the /etc/fstab file,
@@ -144,10 +155,16 @@ If you want it to automatically mount on boot you’ll need to append the follow
 $ sudo nano /etc/fstab
 ```
 
-Add the following line
+Add the following line for FAT32
 
 ```
 /dev/sdaN /mnt/usb auto defaults,user,nofail,uid=1000,gid=1000 0 2
+```
+
+And for ext
+
+```
+/dev/sdaN /mnt/usb auto defaults,user,nofail 0 2
 ```
 
 You can now leave the disk plugged into your Raspberry Pi and it’ll automatically mount when the board is rebooted. However right now the disk isn’t visible from the network, so let’s go ahead and change that.
