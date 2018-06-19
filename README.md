@@ -219,18 +219,6 @@ source ~/raspberry-media-server/.alias
 
 to use the aliases listed in [this](.alias) file.
 
-Then, start all docker containers in the docker compose file.
-
-```bash
-$ dc up -d
-```
-
-To view the logs, type
-
-```bash
-$ dclogs
-```
-
 ## Domain Forwarding
 
 ### Forward (sub)domain 
@@ -255,6 +243,21 @@ You're looking for something like this.
 ![](images/port_forwarding.png)
 
 Forward both ports `80` and `443` to your Raspberry Pi.
+
+## Start containers
+Start all docker containers in the docker compose file.
+
+```bash
+$ dc up -d
+```
+
+This will take a couple of minutes while docker downloads and extracts all the images and layers.
+
+To view the logs, type
+
+```bash
+$ dclogs
+```
 
 
 ## Plex Setup
