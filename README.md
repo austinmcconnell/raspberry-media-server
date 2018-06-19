@@ -81,8 +81,8 @@ drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 `cd` to `appdata/` directory and make individual application directories
 
 ```bash
-cd appdata/
-mkdir letsencrypt plex tautulli
+$ cd appdata/
+$ mkdir letsencrypt plex tautulli
 ```
 
 ## Mount A Network Disk
@@ -141,7 +141,7 @@ $ sudo mount /dev/sdaN /mnt/usb -o uid=pirate,gid=pirate
 If you want it to automatically mount on boot you’ll need to append the following to the /etc/fstab file,
 
 ```bash
-sudo nano /etc/fstab
+$ sudo nano /etc/fstab
 ```
 
 Add the following line
