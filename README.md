@@ -259,22 +259,32 @@ To view the logs, type
 $ dclogs
 ```
 
+## Configure Applications
 
-## Plex Setup
+### NGINX Setup
+
+Hard link the nginx-site-confs-default file to the letsencrypt config location
+
+```bash
+$ cd /opt/appdata/letsencrypt/nginx/
+$ ln ~/raspberry-media-server/nginx-site-confs-default site-confs/default
+```
+
+### Plex Setup
 
 TODO: Fill in!
 
-## Tautulli Setup
+### Tautulli Setup
 
-Go through the welcome screens to configure. Mostly, just enter your plex username and password and pick which plex server you want to track.
+Go through the welcome screens to configure. You might have to access via your local network (eg. 192.168.1.XXX:8181). Mostly, just enter your plex username and password and pick which plex server you want to track.
 
-### Enable reverse proxy
+#### Enable reverse proxy
 
 Settings -> Web Intervace -> Show Advanced
 
 Set the `HTTP Root` to `/tautulli` and check the boxes for `Enable HTTP Proxy` and `Enable HTTPS`.
 
-SSH into your Raspberry Pi. Once, there enable the tautulli sample conf file provided.
+Enable the provided tautulli sample conf file.
 
 ```bash
 $ cd /opt/appdata/letsencrypt/nginx/proxy-confs
