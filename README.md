@@ -89,7 +89,7 @@ $ mkdir letsencrypt plex tautulli
 
 An external drive is necessary to store movies and tv shows for Plex.
 
-Instructions adapted from [this](https://medium.com/@aallan/adding-an-external-disk-to-a-raspberry-pi-and-sharing-it-over-the-network-5b321efce86a) article 
+Instructions adapted from [this](https://medium.com/@aallan/adding-an-external-disk-to-a-raspberry-pi-and-sharing-it-over-the-network-5b321efce86a) article
 
 ### Format the Disk
 
@@ -221,7 +221,7 @@ to use the aliases listed in [this](.alias) file.
 
 ## Domain Forwarding
 
-### Forward (sub)domain 
+### Forward (sub)domain
 
 If you don't already have a domain name (or have a new one in mind), I recommend [Hover](https://hover.com/nTDq8IDa) for all domain name needs. They offer free privacy on all their domain names which protects your information (name, address, etc)
 
@@ -306,5 +306,3 @@ Enable the provided tautulli sample conf file.
 $ cd /opt/appdata/letsencrypt/nginx/proxy-confs
 $ mv tautulli.subfolder.conf.sample tautulli.subfolder.conf
 ```
- 
- 
