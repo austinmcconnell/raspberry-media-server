@@ -51,3 +51,26 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Chicago
+  postgres:
+    image: postgres:10.4
+    container_name: postgres
+    volumes:
+      - /opt/appdata/postgres:/var/lib/postgresql
+    restart: always
+    env_file:
+      - db.env
+  nextcloud:
+    image: lsioarmhf/nextcloud
+    container_name: nextcloud
+    ports:
+      - 1443:443
+    volumes:
+      - /opt/appdata/nextcloud:/config
+      - /mnt/usb2:/data
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago

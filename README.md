@@ -244,6 +244,22 @@ You're looking for something like this.
 
 Forward both ports `80` and `443` to your Raspberry Pi.
 
+## Set Environment Variables
+
+Create a db.env file in the same directory as your docker-compose.yml file
+
+```bash
+$ nano db.env
+```
+
+Add the following environment variables
+
+```ini
+POSTGRES_USER=nextcloud
+POSTGRES_PASSWORD=$replace_me!$
+POSTGRES_DB=nextcloud
+```
+
 ## Start containers
 Start all docker containers in the docker compose file.
 
