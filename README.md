@@ -82,7 +82,7 @@ drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 
 ```bash
 $ cd appdata/
-$ mkdir letsencrypt plex tautulli
+$ mkdir letsencrypt plex tautulli nextcloud
 ```
 
 ## Mount A Network Disk
