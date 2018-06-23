@@ -229,7 +229,7 @@ Access the DNS record of the domain you wish to forward. For Hover, that's Accou
 
 ![](images/domain_add_a_record.jpg)
 
-In my case, I only wanted to forward a subdomain (`pi.austinmcconnell.me`) to my media server, so I added an A record to the list with a hostname of `pi` and the value of my public ip address. If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` instead.
+In my case, I wanted to forward the subdomains `pi.austinmcconnell.me` and `nextcloud.austinmcconnell.me` to my media server, so I added two A records to the list with the hostnames of `pi` and `nextcloud` and the value of my public ip address. If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` instead.
 
 For help finding your public IP address, [this](https://www.whatismyip.com/) is a helpful website. You'll want the IPv4 address.
 
@@ -306,3 +306,62 @@ Enable the provided tautulli sample conf file.
 $ cd /opt/appdata/letsencrypt/nginx/proxy-confs
 $ mv tautulli.subfolder.conf.sample tautulli.subfolder.conf
 ```
+
+### Nextcloud setup
+
+### Setup reverse proxy
+
+Enable the provided nextcloud sample conf file.
+
+```bash
+$ cd /opt/appdata/letsencrypt/nginx/proxy-confs
+$ mv nextcoud.subdomain.conf.sample nextcloud.subdomain.conf
+```
+
+Edit the file and change the domain to listen on from
+
+```ini
+server_name nextcloud.*;
+```
+
+to
+
+```ini
+server_name nextcloud.austinmcconnell.me;
+```
+
+Also, I had to change the proxy_max_temp_file_size to 1024m.
+
+From
+
+```ini
+proxy_max_temp_file_size 2048m;
+```
+
+to
+
+```ini
+proxy_max_temp_file_size 1024m;
+```
+
+#### Edit nextcloud config.php
+
+Edit the nextcloud config file at `/opt/appdata/nextcloud/www/nextcloud/config/config.php`.
+
+Add this line to the trusted_domains array
+
+```
+    1 => 'nextcloud.austinmcconnell.me',
+```
+
+Add the following lines to the top-level config array
+
+```ini
+'overwrite.cli.url' => 'https://nextcloud.austinmcconnell.me',
+'overwritehost' => 'nextcloud.austinmcconnell.me',
+'overwriteprotocol' => 'https',
+```
+
+#### Security check
+
+To check the security of your private nextcloud server, visit [scan.nextcloud.com](scan.nextcloud.com).
