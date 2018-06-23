@@ -229,7 +229,13 @@ Access the DNS record of the domain you wish to forward. For Hover, that's Accou
 
 ![](images/domain_add_a_record.jpg)
 
-In my case, I wanted to forward the subdomains `pi.austinmcconnell.me` and `nextcloud.austinmcconnell.me` to my media server, so I added two A records to the list with the hostnames of `pi` and `nextcloud` and the value of my public ip address. If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` instead.
+Create an A record pointing to your public ip address for each of the following hostnames:
+
+-  pi
+- nextcloud
+- plex
+
+If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` as well.
 
 For help finding your public IP address, [this](https://www.whatismyip.com/) is a helpful website. You'll want the IPv4 address.
 
@@ -279,11 +285,12 @@ $ dclogs
 
 ### NGINX Setup
 
-Hard link the nginx-site-confs-default file to the letsencrypt config location
+Hard link the nginx configs to the letsencrypt config location
 
 ```bash
 $ cd /opt/appdata/letsencrypt/nginx/
 $ ln ~/raspberry-media-server/nginx-site-confs-default site-confs/default
+$ ln ~/raspberry-media-server/plex.subdomain.conf proxy-confs/plex.subdomain.conf
 ```
 
 ### Plex Setup
