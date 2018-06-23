@@ -288,9 +288,8 @@ $ dclogs
 Hard link the nginx configs to the letsencrypt config location
 
 ```bash
-$ cd /opt/appdata/letsencrypt/nginx/
-$ ln ~/raspberry-media-server/nginx-site-confs-default site-confs/default
-$ ln ~/raspberry-media-server/plex.subdomain.conf proxy-confs/plex.subdomain.conf
+$ ln ~/raspberry-media-server/nginx/site-confs/default /opt/appdata/letsencrypt/nginx/site-confs/default
+$ ln ~/raspberry-media-server/nginx/proxy-confs/plex.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/plex.subdomain.conf
 ```
 
 ### Plex Setup
