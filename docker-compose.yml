@@ -19,7 +19,7 @@ services:
       - PGID=1000
       - EMAIL=austin.s.mcconnell@gmail.com
       - URL=austinmcconnell.me
-      - SUBDOMAINS=pi,nextcloud,plex
+      - SUBDOMAINS=pi,nextcloud,plex,automation
       - ONLY_SUBDOMAINS=true
       - DHLEVEL=2048
       - VALIDATION=http
@@ -71,6 +71,18 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+  home-assistant:
+    container_name: home-assistant
+    image: homeassistant/armhf-homeassistant
+    ports:
+      - 8123:8123
+    volumes:
+      - /opt/appdata/home-assistant:/config
+    restart: always
     environment:
       - PUID=1000
       - PGID=1000

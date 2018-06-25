@@ -7,6 +7,7 @@ The following applications are run using Docker:
 - LetsEncrypt
 - Plex
 - Tautulli
+- Home Assistant
 
 
 ## Flash OS to SD Card
@@ -82,7 +83,7 @@ drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 
 ```bash
 $ cd appdata/
-$ mkdir letsencrypt plex tautulli nextcloud
+$ mkdir letsencrypt plex tautulli nextcloud home-assistant
 ```
 
 ## Mount A Network Disk
@@ -292,6 +293,7 @@ $ ln ~/raspberry-media-server/nginx/site-confs/default /opt/appdata/letsencrypt/
 $ ln ~/raspberry-media-server/nginx/proxy-confs/nextcloud.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/nextcloud.subdomain.conf
 $ ln ~/raspberry-media-server/nginx/proxy-confs/plex.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/plex.subdomain.conf
 $ ln ~/raspberry-media-server/nginx/proxy-confs/tautulli.subfolder.conf /opt/appdata/letsencrypt/nginx/proxy-confs/tautulli.subfolder.conf
+$ ln ~/raspberry-media-server/nginx/proxy-confs/homeassistant.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/homeassistant.subdomain.conf
 ```
 
 ### Plex Setup
