@@ -253,6 +253,23 @@ Forward both ports `80` and `443` to your Raspberry Pi.
 
 ## Set Environment Variables
 
+### Generic Environment Variables
+
+Create a .env file in the same directory as your docker-compose.yml file
+
+```bash
+$ nano general.env
+```
+
+Add the following environment variables
+
+```ini
+EMAIL=$your_email$
+URL=$main_domain$  # eg: austinmcconnell.me
+```
+
+### Database-Specific Environment Variables
+
 Create a db.env file in the same directory as your docker-compose.yml file
 
 ```bash
