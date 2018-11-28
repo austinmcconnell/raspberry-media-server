@@ -184,14 +184,21 @@ Edit the /etc/netatalk/AppleVolumes.default. Add the /mnt/usb disk to the list o
 $ sudo nano /etc/netatalk/AppleVolumes.default
 ```
 
-By default all users have access to their home directories.
+Page to the end of the file (control + v) and you will see users have access to their home directory by default.
 
 ```bash
 ~/                      "Home Directory"
-/mnt/usb                "Network Disk"
 ```
 
-If you want to you can also remove the entire for `~/` which will mean that the only disk exported is our external drive. Afterwards go ahead and restart the Netatalk daemon.
+Add the following lines below ~/. Also, I renamed "Home Directory" to "home" because I like naming conventions to be consistent. Feel free to name the mount points whatever you like. The names will show up as folder names in Finder when you mount the drive.
+
+```bash
+~/                      "home"
+/mnt/usb                "plex"
+/mnt/usb2               "nextcloud"
+```
+
+If you want to you can also remove the entire line for `~/` which will mean that the only disk exported is our external drive. Afterwards go ahead and restart the Netatalk daemon.
 
 ```bash
 $ sudo /etc/init.d/netatalk restart
