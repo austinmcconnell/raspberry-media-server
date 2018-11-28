@@ -104,13 +104,13 @@ List all drives
 
 ```
 $ sudo blkid -o list
-device                             fs_type      label         mount point                            UUID
-------------------------------------------------------------------------------------------------------------------------------------------
-/dev/mmcblk0                                                  (in use)
-/dev/mmcblk0p1                     vfat         HypriotOS     /boot                                  7075-EEF7
-/dev/mmcblk0p2                     ext4         root          /                                      2a81f25a-2ca2-4520-a1a6-c9dd75527c3c
-/dev/sda1                          vfat         EFI           (not mounted)                          67E3-17ED
-/dev/sda2                          vfat         MEDIA         (not mounted)                          7935-1A04
+device                fs_type     label            mount point      UUID
+--------------------------------------------------------------------------------------------------------
+/dev/mmcblk0                                       (in use)
+/dev/mmcblk0p1        vfat        HypriotOS        /boot            7075-EEF7
+/dev/mmcblk0p2        ext4        root             /                2a81f25a-2ca2-4520-a1a6-c9dd75527c3c
+/dev/sda1             ext4        nextcloud        /mnt/usb2        7f68d8da-98bc-4553-9ce7-6b0df574ec15
+/dev/sda2             ext4        plex             /mnt/usb         98b43986-eaa4-4bcc-9618-ac04d1652476
 ```
 
 Format drive (if needed)
