@@ -131,6 +131,12 @@ Although be aware that if the disk is already formatted it might automatically b
 $ sudo umount /dev/sdaN
 ```
 
+If you need to rename the filesystem labels, you can use the following command.
+
+```bash
+$ sudo e2label {device} {label}
+```
+
 ### Mounting the Disk
 
 ```bash
