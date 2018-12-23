@@ -56,7 +56,7 @@ services:
     image: postgres:10.4
     container_name: postgres
     volumes:
-      - /opt/appdata/postgres:/var/lib/postgresql
+      - /opt/appdata/postgres:/var/lib/postgresql/data
     restart: always
     env_file:
       - db.env
