@@ -33,6 +33,7 @@ services:
       - /opt/appdata/plex:/config
       - /mnt/plex/movies:/data/movies
       - /mnt/plex/tvshows:/data/tvshows
+      - /mnt/plex/transcribe:/transcribe
     restart: always
     environment:
       - PUID=1000
