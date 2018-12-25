@@ -7,6 +7,7 @@ The following applications are run using Docker:
 - LetsEncrypt
 - Plex
 - Tautulli
+- Nextcloud
 - Home Assistant
 
 
@@ -88,7 +89,9 @@ $ mkdir letsencrypt plex tautulli nextcloud home-assistant
 
 ## Mount A Network Disk
 
-An external drive is necessary to store movies and tv shows for Plex.
+An external drive is necessary to store
+ - movies and tv shows for Plex
+ - nextcloud synced files
 
 Instructions adapted from [this](https://medium.com/@aallan/adding-an-external-disk-to-a-raspberry-pi-and-sharing-it-over-the-network-5b321efce86a) article
 
@@ -109,8 +112,8 @@ device                fs_type     label            mount point      UUID
 /dev/mmcblk0                                       (in use)
 /dev/mmcblk0p1        vfat        HypriotOS        /boot            7075-EEF7
 /dev/mmcblk0p2        ext4        root             /                2a81f25a-2ca2-4520-a1a6-c9dd75527c3c
-/dev/sda1             ext4        nextcloud        /mnt/usb2        7f68d8da-98bc-4553-9ce7-6b0df574ec15
-/dev/sda2             ext4        plex             /mnt/usb         98b43986-eaa4-4bcc-9618-ac04d1652476
+/dev/sda1             ext4        nextcloud        /mnt/nextcloud   7f68d8da-98bc-4553-9ce7-6b0df574ec15
+/dev/sda2             ext4        plex             /mnt/plex        98b43986-eaa4-4bcc-9618-ac04d1652476
 ```
 
 Format drive (if needed)
@@ -139,21 +142,27 @@ $ sudo e2label {device} {label}
 
 ### Mounting the Disk
 
+For all commands below, I'll used /dev/sdaN to be general. Replace N with the correct partition number for each partition.
+
 ```bash
-$ sudo mkdir /mnt/usb
-$ sudo chown -R pirate:pirate /mnt/usb
+$ sudo mkdir /mnt/plex
+$ sudo mkdir /mnt/nextcloud
+$ sudo chown -R pirate:pirate /mnt/plex
+$ sudo chown -R pirate:pirate /mnt/nextcloud
 ```
 
 For FAT32 formatted drives, manually mount with the following command
 
 ```bash
-$ sudo mount /dev/sdaN /mnt/usb -o uid=pirate,gid=pirate
+$ sudo mount /dev/sdaN /mnt/plex -o uid=pirate,gid=pirate
+$ sudo mount /dev/sdaN /mnt/nextcloud -o uid=pirate,gid=pirate
 ```
 
 For ext formatted drives, the user and group are determined by the folder permissions so they must be drop from any mount commmands.
 
 ```bash
-$ sudo mount /dev/sdaN /mnt/usb
+$ sudo mount /dev/sdaN /mnt/plex
+$ sudo mount /dev/sdaN /mnt/nextcloud
 ```
 
 If you want it to automatically mount on boot you’ll need to append the following to the /etc/fstab file,
@@ -162,16 +171,18 @@ If you want it to automatically mount on boot you’ll need to append the follow
 $ sudo nano /etc/fstab
 ```
 
-Add the following line for FAT32
+Add the following lines for FAT32
 
 ```
-/dev/sdaN /mnt/usb auto defaults,user,nofail,uid=1000,gid=1000 0 2
+/dev/sdaN /mnt/plex auto defaults,user,nofail,uid=1000,gid=1000 0 2
+/dev/sdaN /mnt/nextcloud auto defaults,user,nofail,uid=1000,gid=1000 0 2
 ```
 
 And for ext
 
 ```
-/dev/sdaN /mnt/usb auto defaults,user,nofail 0 2
+/dev/sdaN /mnt/plex auto defaults,user,nofail 0 2
+/dev/sdaN /mnt/nextcloud auto defaults,user,nofail 0 2
 ```
 
 You can now leave the disk plugged into your Raspberry Pi and it’ll automatically mount when the board is rebooted. However right now the disk isn’t visible from the network, so let’s go ahead and change that.
@@ -200,8 +211,8 @@ Add the following lines below ~/. Also, I renamed "Home Directory" to "home" bec
 
 ```bash
 ~/                      "home"
-/mnt/usb                "plex"
-/mnt/usb2               "nextcloud"
+/mnt/plex               "plex"
+/mnt/nextcloud          "nextcloud"
 ```
 
 If you want to you can also remove the entire line for `~/` which will mean that the only disk exported is our external drive. Afterwards go ahead and restart the Netatalk daemon.
