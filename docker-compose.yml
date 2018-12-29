@@ -41,7 +41,7 @@ services:
       - PUID=1000
       - PGID=1000
   tautulli:
-    image: lsioarmhf/tautulli
+    image: lsioarmhf/tautulli:134
     container_name: tautulli
     ports:
       - 8181:8181
