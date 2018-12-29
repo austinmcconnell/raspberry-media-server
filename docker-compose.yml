@@ -65,7 +65,7 @@ services:
     env_file:
       - db.env
   nextcloud:
-    image: lsioarmhf/nextcloud
+    image: lsioarmhf/nextcloud:119
     container_name: nextcloud
     ports:
       - 444:443
