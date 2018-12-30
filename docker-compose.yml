@@ -19,7 +19,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - SUBDOMAINS=pi,nextcloud,plex,automation
+      - SUBDOMAINS=pi,plex,nextcloud,tautulli,homeassistant
       - ONLY_SUBDOMAINS=true
       - DHLEVEL=2048
       - VALIDATION=http
