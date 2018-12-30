@@ -330,12 +330,12 @@ $ dclogs
 Hard link the nginx configs to the letsencrypt config location
 
 ```bash
-$ ln ~/raspberry-media-server/nginx/proxy.conf /opt/appdata/letsencrypt/nginx/proxy.conf
-$ ln ~/raspberry-media-server/nginx/site-confs/default /opt/appdata/letsencrypt/nginx/site-confs/default
-$ ln ~/raspberry-media-server/nginx/proxy-confs/nextcloud.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/nextcloud.subdomain.conf
-$ ln ~/raspberry-media-server/nginx/proxy-confs/plex.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/plex.subdomain.conf
-$ ln ~/raspberry-media-server/nginx/proxy-confs/tautulli.subfolder.conf /opt/appdata/letsencrypt/nginx/proxy-confs/tautulli.subfolder.conf
-$ ln ~/raspberry-media-server/nginx/proxy-confs/homeassistant.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/homeassistant.subdomain.conf
+$ ln -s ~/raspberry-media-server/nginx/proxy.conf /opt/appdata/letsencrypt/nginx/proxy.conf
+$ ln -s ~/raspberry-media-server/nginx/site-confs/default /opt/appdata/letsencrypt/nginx/site-confs/default
+$ ln -s ~/raspberry-media-server/nginx/proxy-confs/nextcloud.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/nextcloud.subdomain.conf
+$ ln -s ~/raspberry-media-server/nginx/proxy-confs/plex.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/plex.subdomain.conf
+$ ln -s ~/raspberry-media-server/nginx/proxy-confs/tautulli.subfolder.conf /opt/appdata/letsencrypt/nginx/proxy-confs/tautulli.subfolder.conf
+$ ln -s ~/raspberry-media-server/nginx/proxy-confs/homeassistant.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/homeassistant.subdomain.conf
 ```
 
 ### Plex Setup
