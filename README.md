@@ -259,6 +259,8 @@ Create an A record pointing to your public ip address for each of the following 
 -  pi
 - nextcloud
 - plex
+- homeassistant
+- tautulli
 
 If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` as well.
 
@@ -327,15 +329,34 @@ $ dclogs
 
 ### NGINX Setup
 
-Hard link the nginx configs to the letsencrypt config location
+#### Set client_max_body_size to unlimited in nginx/proxy.conf
+ in nginx/proxy.conf
 
 ```bash
-$ ln -s ~/raspberry-media-server/nginx/proxy.conf /opt/appdata/letsencrypt/nginx/proxy.conf
-$ ln -s ~/raspberry-media-server/nginx/site-confs/default /opt/appdata/letsencrypt/nginx/site-confs/default
-$ ln -s ~/raspberry-media-server/nginx/proxy-confs/nextcloud.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/nextcloud.subdomain.conf
-$ ln -s ~/raspberry-media-server/nginx/proxy-confs/plex.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/plex.subdomain.conf
-$ ln -s ~/raspberry-media-server/nginx/proxy-confs/tautulli.subfolder.conf /opt/appdata/letsencrypt/nginx/proxy-confs/tautulli.subfolder.conf
-$ ln -s ~/raspberry-media-server/nginx/proxy-confs/homeassistant.subdomain.conf /opt/appdata/letsencrypt/nginx/proxy-confs/homeassistant.subdomain.conf
+cd /opt/appdata/letsencrypt/nginx
+nano proxy.conf
+```
+Change line from `client_max_body_size 10m;` to `client_max_body_size 0;`
+
+#### Add fastcgi_read_timeout in nginx/site-confs/default
+
+```bash
+cd /opt/appdata/letsencrypt/nginx/site-confs
+nano default
+```
+Add `fastcgi_read_timeout 1200;` in the `location ~ \.php$` block of the main server block
+
+#### Forward all traffic to HTTPS
+
+Uncomment the following block in nginx/site-confs/default
+
+```ini
+server {
+        listen 80;
+        listen [::]:80;
+        server_name _;
+        return 301 https://$host$request_uri;
+}
 ```
 
 ### Plex Setup
@@ -348,9 +369,9 @@ Go through the welcome screens to configure. You might have to access via your l
 
 #### Enable reverse proxy
 
-Settings -> Web Intervace -> Show Advanced
+Settings -> Web Interface -> Show Advanced
 
-Set the `HTTP Root` to `/tautulli` and check the boxes for `Enable HTTP Proxy` and `Enable HTTPS`.
+Check the boxes for `Enable HTTP Proxy` and `Enable HTTPS`.
 
 Enable the provided tautulli sample conf file.
 
@@ -370,19 +391,7 @@ $ cd /opt/appdata/letsencrypt/nginx/proxy-confs
 $ mv nextcoud.subdomain.conf.sample nextcloud.subdomain.conf
 ```
 
-Edit the file and change the domain to listen on from
-
-```ini
-server_name nextcloud.*;
-```
-
-to
-
-```ini
-server_name nextcloud.austinmcconnell.me;
-```
-
-Also, I had to change the proxy_max_temp_file_size to 1024m.
+I had to change the proxy_max_temp_file_size to 1024m. I believe this is Raspberry Pi 2 specific. Try with default setting on a Raspberry Pi 3.
 
 From
 
