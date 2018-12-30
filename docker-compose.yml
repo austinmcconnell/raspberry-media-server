@@ -81,7 +81,7 @@ services:
       - TZ=America/Chicago
   home-assistant:
     image: homeassistant/armhf-homeassistant:0.84.6
-    container_name: home-assistant
+    container_name: homeassistant
     ports:
       - 8123:8123
     volumes:
