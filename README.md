@@ -426,3 +426,107 @@ Add the following lines to the top-level config array
 #### Security check
 
 To check the security of your private nextcloud server, visit [scan.nextcloud.com](scan.nextcloud.com).
+
+#### Theme
+
+I'm using the [nextcloud-breeze-dark]() theme. Clone it to the themes folder with the following command:
+
+```bash
+git clone https://github.com/mwalbeck/nextcloud-breeze-dark /opt/appdata/nextcloud/www/nextcloud/themes/nextcloud-breeze-dark
+```
+
+To enable the theme, add or change the theme option in your config.php to:
+
+```ini
+'theme' => 'nextcloud-breeze-dark',
+```
+
+## Backup your AppData and Home folder
+
+We'll use [rclone](https://rclone.org) which is "rsync for cloud storage".
+
+To install rclone on Linux/macOS/BSD systems, run:
+
+```bash
+curl https://rclone.org/install.sh | sudo bash
+```
+
+Depending on your OS, you might have to install unzip First.
+
+```bash
+sudo apt-get install unzip
+```
+
+Setup rclone using the following command
+
+```bash
+ rclone config
+```
+
+Set up remote backups for the /opt/appdata and ~/raspberry-media-server folder like so.
+
+### Plex
+
+For Plex, we need to [backup](https://support.plex.tv/articles/201539237-backing-up-plex-media-server-data/) the data and additional settings. This section is for backing up application config so all we need is the Preferences.xml file
+```bash
+rclone copy /opt/appdata/plex/Library/Application\ Support/Plex\ Media\ Server/Preferences.xml remote:raspberry-pi-backup/appdata/plex/ --progress
+```
+
+### Nextcloud
+
+For nextcloud, the two main folders we need to backup are config and themes
+
+```bash
+rclone copy /opt/appdata/nextcloud/www/nextcloud/config remote:raspberry-pi-backup/appdata/nextcloud/config --progress
+rclone copy /opt/appdata/nextcloud/www/nextcloud/themes remote:raspberry-pi-backup/appdata/nextcloud/themes --progress
+```
+Backup the data
+TODO
+
+Backup the database
+TODO
+
+### Letsencrypt
+
+It's only 5 MB. Just copy it all!
+
+```bash
+rclone copy /opt/appdata/letsencrypt remote:raspberry-pi-backup/appdata/letsencrypt --copy-links --progress
+```
+
+### Home Assistant
+
+Make a file `exclude-file.txt` with the following contents:
+
+```ini
+*.db
+.git/
+.uuid
+```
+
+Backup everything except files matching patterns in the exclude file
+
+```bash
+rclone copy /opt/appdata/home-assistant remote:raspberry-pi-backup/appdata/homeassistant --exclude-from exclude-file.txt --progress
+```
+
+### Tautulli
+
+```bash
+rclone copy /opt/appdata/tautulli remote:raspberry-pi-backup/appdata/tautulli --exclude logs --progress
+```
+
+### Cron
+
+Add the included rclone-cron.sh to the pirate user's crontab.
+
+```bash
+crontab -e
+```
+
+Add the following line to the bottom of the file
+```
+0 2 * * * ~/raspberry-media-server/rclone-cron.sh >/dev/null 2>&1
+```
+
+All the rclone backups will occur each morning at 2:00 AM.
