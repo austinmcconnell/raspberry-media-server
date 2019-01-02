@@ -10,6 +10,7 @@ The following applications are run using Docker:
 - Nextcloud
 - Home Assistant
 - Portainer
+- Redis
 
 ## Flash OS to SD Card
 
@@ -84,7 +85,7 @@ drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 
 ```bash
 $ cd appdata/
-$ mkdir letsencrypt plex tautulli nextcloud home-assistant portainer
+$ mkdir letsencrypt plex tautulli nextcloud home-assistant portainer redis
 ```
 
 ## Mount A Network Disk

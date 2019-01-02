@@ -96,8 +96,17 @@ services:
     container_name: portainer
     ports:
       - 9000:9000
-    command: --templates http://templates/templates.json
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/appdata/portainer:/data
     restart: always
+  redis:
+    image: redis:5.0.3-alpine
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - /opt/appdata/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - /mnt/redis:/data
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"]
