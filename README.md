@@ -9,7 +9,7 @@ The following applications are run using Docker:
 - Tautulli
 - Nextcloud
 - Home Assistant
-
+- Portainer
 
 ## Flash OS to SD Card
 
@@ -84,7 +84,7 @@ drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 
 ```bash
 $ cd appdata/
-$ mkdir letsencrypt plex tautulli nextcloud home-assistant
+$ mkdir letsencrypt plex tautulli nextcloud home-assistant portainer
 ```
 
 ## Mount A Network Disk
@@ -261,6 +261,7 @@ Create an A record pointing to your public ip address for each of the following 
 - plex
 - homeassistant
 - tautulli
+- portainer
 
 If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` as well.
 
