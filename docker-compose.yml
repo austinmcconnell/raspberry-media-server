@@ -59,7 +59,7 @@ services:
     image: postgres:10.4
     container_name: postgres
     volumes:
-      - /opt/appdata/postgres:/var/lib/postgresql/data
+      - /mnt/postgres:/var/lib/postgresql/data
     restart: always
     user: 1000:1000
     env_file:
@@ -96,7 +96,6 @@ services:
     container_name: portainer
     ports:
       - 9000:9000
-    command: --templates http://templates/templates.json
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/appdata/portainer:/data

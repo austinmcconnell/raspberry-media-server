@@ -147,8 +147,10 @@ For all commands below, I'll used /dev/sdaN to be general. Replace N with the co
 ```bash
 $ sudo mkdir /mnt/plex
 $ sudo mkdir /mnt/nextcloud
+$ sudo mkdir /mnt/postgres
 $ sudo chown -R pirate:pirate /mnt/plex
 $ sudo chown -R pirate:pirate /mnt/nextcloud
+$ sudo chown -R pirate:pirate /mnt/postgres
 ```
 
 For FAT32 formatted drives, manually mount with the following command
@@ -156,6 +158,7 @@ For FAT32 formatted drives, manually mount with the following command
 ```bash
 $ sudo mount /dev/sdaN /mnt/plex -o uid=pirate,gid=pirate
 $ sudo mount /dev/sdaN /mnt/nextcloud -o uid=pirate,gid=pirate
+$ sudo mount /dev/sdaN /mnt/postgres -o uid=pirate,gid=pirate
 ```
 
 For ext formatted drives, the user and group are determined by the folder permissions so they must be drop from any mount commmands.
@@ -163,6 +166,7 @@ For ext formatted drives, the user and group are determined by the folder permis
 ```bash
 $ sudo mount /dev/sdaN /mnt/plex
 $ sudo mount /dev/sdaN /mnt/nextcloud
+$ sudo mount /dev/sdaN /mnt/postgres
 ```
 
 If you want it to automatically mount on boot you’ll need to append the following to the /etc/fstab file,
@@ -176,6 +180,7 @@ Add the following lines for FAT32
 ```
 /dev/sdaN /mnt/plex auto defaults,user,nofail,uid=1000,gid=1000 0 2
 /dev/sdaN /mnt/nextcloud auto defaults,user,nofail,uid=1000,gid=1000 0 2
+/dev/sdaN /mnt/postgres auto defaults,user,nofail,uid=1000,gid=1000 0 2
 ```
 
 And for ext
@@ -183,6 +188,7 @@ And for ext
 ```
 /dev/sdaN /mnt/plex auto defaults,user,nofail 0 2
 /dev/sdaN /mnt/nextcloud auto defaults,user,nofail 0 2
+/dev/sdaN /mnt/postgres auto defaults,user,nofail 0 2
 ```
 
 You can now leave the disk plugged into your Raspberry Pi and it’ll automatically mount when the board is rebooted. However right now the disk isn’t visible from the network, so let’s go ahead and change that.
