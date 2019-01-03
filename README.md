@@ -13,30 +13,37 @@ The following applications are run using Docker:
 
 ## Flash OS to SD Card
 
-Follow the setup instructions [here](https://blog.hypriot.com/getting-started-with-docker-and-mac-on-the-raspberry-pi/) to flash Hpyriot OS to your sd card
+### Install Flash tool
+Follow the installation instructions [here](https://github.com/hypriot/flash#installation) to install the Flash tool.
+
+### Download user-data.yml file
+
+Download this file: https://github.com/austinmcconnell/raspberry-media-server/blob/master/user-data.yml.sample
+
+Rename it from user-data.yml.sample to user-data.yml
+
+Edit the file and change the password for the pirate user.
+
+Optionally, add an authorized ssh key by adding this line to the user block
+
+ssh_authorized_keys:
+  - ssh-rsa AAA...ZZZ (replace with your public key. If you don't know what a public key is, skip this part)
+
+Flash HypriotOS to your SD card by running the following command:
+
+```bash
+flash --userdata /path/to/user-data.yml https://github.com/hypriot/image-builder-rpi/releases/download/v1.9.0/hypriotos-rpi-v1.9.0.img.zip
+```
+
+Insert the SD card into the raspberry pi, plug in ethernet and hdmi cables, and power up the raspbery pi. It'll take at least 5 minutes to updated all the packages.
 
 ## SSH into Server
 
-First identify the IP address of your own workstation. Type
-
 ```bash
-$ ipconfig getifaddr en1
-192.168.1.100
+ssh pirate@black-pearl.local
 ```
 
-Then replace the IP address in front of the /24 with yours and type
-
-```bash
-$ nmap -sP 192.168.1.100/24 | grep black-pearl
-```
-
-Finally, ssh into the server
-
-```bash
-ssh pirate@192.168.178.10
-```
-
-Default password is `hypriot`. **CHANGE IT**. Simply type the following command and you'll be able to change your password
+If you didn't change the password earlier, the default password is `hypriot`. **CHANGE IT**. Simply type the following command and you'll be able to change your password
 
 ```bash
 $ passwd
