@@ -11,6 +11,8 @@ users:
     groups: users,docker
     plain_text_passwd: hypriot
     lock_passwd: false
+    ssh-authorized-keys:
+      - ssh-rsa AAAA....NN   # insert your SSH public key ~/.ssh/id_rsa.pub here
     chpasswd: { expire: false }
 
 # Update, upgrade, and install packages on first boot
@@ -25,4 +27,4 @@ timezone: "US/Central"
 # These commands will be ran once on first boot only
 runcmd:
   # Pickup the hostname changes
-  - [ systemctl, restart, avahi-daemon ]
+  - 'systemctl restart avahi-daemon'
