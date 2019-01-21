@@ -29,6 +29,8 @@ Optionally, add an authorized ssh key by adding this line to the user block
 ssh_authorized_keys:
   - ssh-rsa AAA...ZZZ (replace with your public key. If you don't know what a public key is, skip this part)
 
+**Note: SD card should be formatted as exfat**
+
 Flash HypriotOS to your SD card by running the following command:
 
 ```bash
@@ -544,3 +546,27 @@ Add the following line to the bottom of the file
 ```
 
 All the rclone backups will occur each morning at 2:00 AM.
+
+## Picocluster (Advanced)
+
+If you want to set this up on a Picocluster (I used the [Pico 3](https://www.picocluster.com/collections/pico-3/products/pico-3-raspberry-pi)), follow these steps.
+
+First, flash the master (`user-data-master.yml`) and worker user-data files (`user-data-workerN.yml`).
+
+If you are prividing ssh-authorized-keys and want to disable password login, change `lock_passwd` from `false` to `true` in the user-data files.
+
+SSH into the master to get the join token
+
+```bash
+ssh pirate@pc0.local
+docker swarm join-token worker
+```
+
+Copy the output of the previous command. SSH into the first worker and run join the swarm.
+
+```bash
+ssh pirate@pc1.local
+docker swarm join --token $token_from_previous_step$ 192.168.1.240:2377
+```
+
+Repeat the above for workers 2 and 3

@@ -1,6 +1,6 @@
 #cloud-config
 
-hostname: black-pearl
+hostname: pc1
 manage_etc_hosts: true
 
 users:
@@ -23,6 +23,19 @@ package_reboot_if_required: true
 # Set the locale and timezone of the system
 locale: "en_US.UTF-8"
 timezone: "US/Central"
+
+# Static IP address
+write_files:
+  - content: |
+      persistent
+      # Generate Stable Private IPv6 Addresses instead of hardware based ones
+      slaac private
+      # static IP configuration:
+      interface eth0
+      static ip_address=192.168.1.241/24
+      static routers=192.168.1.1
+      static domain_name_servers=192.168.1.1 1.1.1.1
+    path: /etc/dhcpcd.conf
 
 # These commands will be ran once on first boot only
 runcmd:
