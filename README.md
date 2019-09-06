@@ -31,11 +31,19 @@ ssh_authorized_keys:
 
 **Note: SD card should be formatted as exfat**
 
+Format your sd card as exfat with a Master Boot Record with the following command:
+
+```bash
+diskutil eraseDisk exfat name MBRFormat /dev/diskN
+```
+
 Flash HypriotOS to your SD card by running the following command:
 
 ```bash
 flash --userdata /path/to/user-data.yml https://github.com/hypriot/image-builder-rpi/releases/download/v1.9.0/hypriotos-rpi-v1.9.0.img.zip
 ```
+
+If you get the error `dd: invalid number: ‘1m’` while flashing your sd card, check which version of `dd` you are using with `which dd`. If the result is, `/usr/local/opt/coreutils/libexec/gnubin/dd`, then you likely have installed `coreutils` with brew which has it's own version of dd. Uninstall `coreutils` and try the flash command again.
 
 Insert the SD card into the raspberry pi, plug in ethernet and hdmi cables, and power up the raspbery pi. It'll take at least 5 minutes to updated all the packages.
 
