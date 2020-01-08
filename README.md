@@ -578,3 +578,17 @@ docker swarm join --token $token_from_previous_step$ 192.168.1.240:2377
 ```
 
 Repeat the above for workers 2 and 3
+
+### Label the pi docker node that has the USB drive attached
+
+Attach your usb drive to one of the raspberry pi nodes in your cluster. Ssh into this pi and add a label designating it as the data node.
+
+```bash
+docker node update --label-add data node_name
+```
+
+Then ssh into your manager node and deploy the stack
+
+```bash
+docker stack deploy
+```
