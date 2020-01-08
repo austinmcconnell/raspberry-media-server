@@ -2,7 +2,7 @@
 version: "3"
 services:
   letsencrypt:
-    image: lsioarmhf/letsencrypt:210
+    image: linuxserver/letsencrypt:latest
     container_name: letsencrypt
     ports:
       - 80:80
@@ -27,21 +27,22 @@ services:
     env_file:
       - general.env
   plex:
-    image: lsioarmhf/plex:136
+    image: linuxserver/plex:latest
     container_name: plex
+    network_mode: host
     ports:
       - 32400:32400
     volumes:
       - /opt/appdata/plex:/config
       - /mnt/plex/movies:/data/movies
       - /mnt/plex/tvshows:/data/tvshows
-      - /mnt/plex/transcribe:/transcribe
     restart: always
     environment:
       - PUID=1000
       - PGID=1000
+      - VERSION=latest
   tautulli:
-    image: lsioarmhf/tautulli:134
+    image: linuxserver/tautulli:latest
     container_name: tautulli
     ports:
       - 8181:8181
@@ -56,7 +57,7 @@ services:
       - PGID=1000
       - TZ=America/Chicago
   postgres:
-    image: postgres:10.4
+    image: postgres:11.7
     container_name: postgres
     volumes:
       - /mnt/postgres:/var/lib/postgresql/data
@@ -65,7 +66,7 @@ services:
     env_file:
       - db.env
   nextcloud:
-    image: lsioarmhf/nextcloud:119
+    image: linuxserver/nextcloud:latest
     container_name: nextcloud
     ports:
       - 444:443
@@ -80,7 +81,7 @@ services:
       - PGID=1000
       - TZ=America/Chicago
   home-assistant:
-    image: homeassistant/armhf-homeassistant:0.84.6
+    image: homeassistant/home-assistant:0.108.1
     container_name: homeassistant
     ports:
       - 8123:8123
@@ -92,7 +93,7 @@ services:
       - PGID=1000
       - TZ=America/Chicago
   portainer:
-    image: portainer/portainer:linux-arm-1.20.0
+    image: portainer/portainer:linux-arm-1.23.0
     container_name: portainer
     ports:
       - 9000:9000
