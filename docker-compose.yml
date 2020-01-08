@@ -9,6 +9,10 @@ services:
       - 443:443
     volumes:
       - /opt/appdata/letsencrypt:/config
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.data]
     restart:
       always
     depends_on:
@@ -36,6 +40,10 @@ services:
       - /mnt/plex/movies:/data/movies
       - /mnt/plex/tvshows:/data/tvshows
       - /mnt/plex/transcribe:/transcribe
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.data]
     restart: always
     environment:
       - PUID=1000
@@ -50,6 +58,10 @@ services:
     volumes:
       - /opt/appdata/tautulli:/config
       - /opt/appdata/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.data]
     restart: unless-stopped
     environment:
       - PUID=1000
@@ -60,6 +72,10 @@ services:
     container_name: postgres
     volumes:
       - /mnt/postgres:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.data]
     restart: always
     user: 1000:1000
     env_file:
@@ -72,6 +88,10 @@ services:
     volumes:
       - /opt/appdata/nextcloud:/config
       - /mnt/nextcloud:/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.data]
     restart: unless-stopped
     depends_on:
       - postgres
@@ -86,6 +106,10 @@ services:
       - 8123:8123
     volumes:
       - /opt/appdata/home-assistant:/config
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.data]
     restart: always
     environment:
       - PUID=1000
@@ -99,4 +123,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/appdata/portainer:/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.data]
     restart: always
