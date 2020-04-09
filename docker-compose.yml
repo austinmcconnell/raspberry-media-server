@@ -8,7 +8,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /opt/appdata/letsencrypt:/config
+      - /mnt/appdata/letsencrypt:/config
     restart:
       always
     depends_on:
@@ -33,7 +33,7 @@ services:
     ports:
       - 32400:32400
     volumes:
-      - /opt/appdata/plex:/config
+      - /mnt/appdata/plex:/config
       - /mnt/plex/movies:/data/movies
       - /mnt/plex/tvshows:/data/tvshows
     restart: always
@@ -49,8 +49,8 @@ services:
     depends_on:
       - plex
     volumes:
-      - /opt/appdata/tautulli:/config
-      - /opt/appdata/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro
+      - /mnt/appdata/tautulli:/config
+      - /mnt/appdata/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro
     restart: unless-stopped
     environment:
       - PUID=1000
@@ -71,7 +71,7 @@ services:
     ports:
       - 444:443
     volumes:
-      - /opt/appdata/nextcloud:/config
+      - /mnt/appdata/nextcloud:/config
       - /mnt/nextcloud:/data
     restart: unless-stopped
     depends_on:
@@ -86,7 +86,7 @@ services:
     ports:
       - 8123:8123
     volumes:
-      - /opt/appdata/home-assistant:/config
+      - /mnt/appdata/home-assistant:/config
     restart: always
     environment:
       - PUID=1000
@@ -99,5 +99,5 @@ services:
       - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/appdata/portainer:/data
+      - /mnt/appdata/portainer:/data
     restart: always
