@@ -19,7 +19,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - SUBDOMAINS=pi,plex,nextcloud,tautulli,homeassistant,portainer
+      - SUBDOMAINS=pi,plex,nextcloud,tautulli,homeassistant,portainer,photos
       - ONLY_SUBDOMAINS=true
       - DHLEVEL=2048
       - VALIDATION=http
@@ -101,3 +101,32 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/appdata/portainer:/data
     restart: always
+  lychee:
+    image: linuxserver/lychee:v3.2.16-ls61
+    container_name: lychee
+    volumes:
+      - /mnt/appdata/lychee:/config
+      - /mnt/pictures:/pictures
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    expose:
+      - 80
+    restart: unless-stopped
+  mariadb:
+    image: linuxserver/mariadb:110.4.12mariabionic-ls60
+    container_name: mariadb
+    volumes:
+      - /mnt/appdata/mariadb:/config
+    ports:
+      - 3306:3306
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    env_file:
+      - mariadb.env
+    restart: unless-stopped
+
+

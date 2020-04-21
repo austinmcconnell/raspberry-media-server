@@ -279,12 +279,13 @@ Access the DNS record of the domain you wish to forward. For Hover, that's Accou
 
 Create an A record pointing to your public ip address for each of the following hostnames:
 
--  pi
+- pi
 - nextcloud
 - plex
 - homeassistant
 - tautulli
 - portainer
+- photos
 
 If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` as well.
 
