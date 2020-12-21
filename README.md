@@ -118,6 +118,7 @@ Go ahead and plug in your external drive, and type the following.
 
 ```bash
 $ sudo apt-get install dosfstools
+$ sudo apt-get install ntfs-3g
 ```
 
 List all drives
@@ -145,16 +146,29 @@ Or for cross-platform compatibility
 $ sudo mkfs.fat32 /dev/sdaN -n USB
 ```
 
+or for ntfs
+
+```bash
+$ sudo mkfs.ntfs /dev/sdaN --fast --quick
+```
+
+
 Although be aware that if the disk is already formatted it might automatically be mounted by (more recent) versions of Raspbian, and you might have to unmount it before formatting.
 
 ```bash
 $ sudo umount /dev/sdaN
 ```
 
-If you need to rename the filesystem labels, you can use the following command.
+If you need to rename the filesystem labels, you can use the following command for ext volumes
 
 ```bash
 $ sudo e2label {device} {label}
+```
+
+or this command for ntfs volumes
+
+```bash
+$ sudo ntfslabel {device} {label}
 ```
 
 ### Mounting the Disk
