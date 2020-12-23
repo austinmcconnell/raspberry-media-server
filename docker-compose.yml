@@ -19,7 +19,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - SUBDOMAINS=pi,plex,nextcloud,tautulli,homeassistant,portainer,photos
+      - SUBDOMAINS=pi,plex,nextcloud,tautulli,portainer,photos
       - ONLY_SUBDOMAINS=true
       - DHLEVEL=2048
       - VALIDATION=http
@@ -76,18 +76,6 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-  home-assistant:
-    image: homeassistant/home-assistant:0.108.1
-    container_name: homeassistant
-    ports:
-      - 8123:8123
-    volumes:
-      - /mnt/appdata/home-assistant:/config
-    restart: always
     environment:
       - PUID=1000
       - PGID=1000

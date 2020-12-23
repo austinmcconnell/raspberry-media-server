@@ -8,7 +8,6 @@ The following applications are run using Docker:
 - Plex
 - Tautulli
 - Nextcloud
-- Home Assistant
 - Portainer
 
 ## Flash OS to SD Card
@@ -101,7 +100,7 @@ drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 
 ```bash
 $ cd appdata/
-$ mkdir letsencrypt plex tautulli nextcloud home-assistant portainer
+$ mkdir letsencrypt plex tautulli nextcloud portainer
 ```
 
 ## Mount A Network Disk
@@ -296,7 +295,6 @@ Create an A record pointing to your public ip address for each of the following 
 - pi
 - nextcloud
 - plex
-- homeassistant
 - tautulli
 - portainer
 - photos
@@ -531,22 +529,6 @@ It's only 5 MB. Just copy it all!
 
 ```bash
 rclone copy /opt/appdata/letsencrypt remote:raspberry-pi-backup/appdata/letsencrypt --copy-links --progress
-```
-
-### Home Assistant
-
-Make a file `exclude-file.txt` with the following contents:
-
-```ini
-*.db
-.git/
-.uuid
-```
-
-Backup everything except files matching patterns in the exclude file
-
-```bash
-rclone copy /opt/appdata/home-assistant remote:raspberry-pi-backup/appdata/homeassistant --exclude-from exclude-file.txt --progress
 ```
 
 ### Tautulli
