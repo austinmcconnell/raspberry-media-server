@@ -6,9 +6,6 @@ The following applications are run using Docker:
 
 - LetsEncrypt
 - Plex
-- Tautulli
-- Nextcloud
-- Portainer
 
 ## Flash OS to SD Card
 
@@ -100,14 +97,13 @@ drwxr-xr-x 5 root   root   4096 Apr 28 18:55 vc
 
 ```bash
 $ cd appdata/
-$ mkdir letsencrypt plex tautulli nextcloud portainer
+$ mkdir letsencrypt plex
 ```
 
 ## Mount A Network Disk
 
 An external drive is necessary to store
  - movies and tv shows for Plex
- - nextcloud synced files
 
 Instructions adapted from [this](https://medium.com/@aallan/adding-an-external-disk-to-a-raspberry-pi-and-sharing-it-over-the-network-5b321efce86a) article
 
@@ -129,7 +125,6 @@ device                fs_type     label            mount point      UUID
 /dev/mmcblk0                                       (in use)
 /dev/mmcblk0p1        vfat        HypriotOS        /boot            7075-EEF7
 /dev/mmcblk0p2        ext4        root             /                2a81f25a-2ca2-4520-a1a6-c9dd75527c3c
-/dev/sda1             ext4        nextcloud        /mnt/nextcloud   7f68d8da-98bc-4553-9ce7-6b0df574ec15
 /dev/sda2             ext4        plex             /mnt/plex        98b43986-eaa4-4bcc-9618-ac04d1652476
 ```
 
@@ -176,27 +171,19 @@ For all commands below, I'll used /dev/sdaN to be general. Replace N with the co
 
 ```bash
 $ sudo mkdir /mnt/plex
-$ sudo mkdir /mnt/nextcloud
-$ sudo mkdir /mnt/postgres
 $ sudo chown -R pirate:pirate /mnt/plex
-$ sudo chown -R pirate:pirate /mnt/nextcloud
-$ sudo chown -R pirate:pirate /mnt/postgres
 ```
 
 For FAT32 formatted drives, manually mount with the following command
 
 ```bash
 $ sudo mount /dev/sdaN /mnt/plex -o uid=pirate,gid=pirate
-$ sudo mount /dev/sdaN /mnt/nextcloud -o uid=pirate,gid=pirate
-$ sudo mount /dev/sdaN /mnt/postgres -o uid=pirate,gid=pirate
 ```
 
 For ext formatted drives, the user and group are determined by the folder permissions so they must be drop from any mount commmands.
 
 ```bash
 $ sudo mount /dev/sdaN /mnt/plex
-$ sudo mount /dev/sdaN /mnt/nextcloud
-$ sudo mount /dev/sdaN /mnt/postgres
 ```
 
 If you want it to automatically mount on boot you’ll need to append the following to the /etc/fstab file,
@@ -209,16 +196,12 @@ Add the following lines for FAT32
 
 ```
 /dev/sdaN /mnt/plex auto defaults,user,nofail,uid=1000,gid=1000 0 2
-/dev/sdaN /mnt/nextcloud auto defaults,user,nofail,uid=1000,gid=1000 0 2
-/dev/sdaN /mnt/postgres auto defaults,user,nofail,uid=1000,gid=1000 0 2
 ```
 
 And for ext
 
 ```
 /dev/sdaN /mnt/plex auto defaults,user,nofail 0 2
-/dev/sdaN /mnt/nextcloud auto defaults,user,nofail 0 2
-/dev/sdaN /mnt/postgres auto defaults,user,nofail 0 2
 ```
 
 You can now leave the disk plugged into your Raspberry Pi and it’ll automatically mount when the board is rebooted. However right now the disk isn’t visible from the network, so let’s go ahead and change that.
@@ -248,7 +231,6 @@ Add the following lines below ~/. Also, I renamed "Home Directory" to "home" bec
 ```bash
 ~/                      "home"
 /mnt/plex               "plex"
-/mnt/nextcloud          "nextcloud"
 ```
 
 If you want to you can also remove the entire line for `~/` which will mean that the only disk exported is our external drive. Afterwards go ahead and restart the Netatalk daemon.
@@ -293,11 +275,7 @@ Access the DNS record of the domain you wish to forward. For Hover, that's Accou
 Create an A record pointing to your public ip address for each of the following hostnames:
 
 - pi
-- nextcloud
 - plex
-- tautulli
-- portainer
-- photos
 
 If you want your main domain (e.g. `austinmcconnell.me`) to forward to your media sever, then change the values for the A records with Host type `*` and `@` as well.
 
@@ -329,22 +307,6 @@ Add the following environment variables
 ```ini
 EMAIL=$your_email$
 URL=$main_domain$  # eg: austinmcconnell.me
-```
-
-### Database-Specific Environment Variables
-
-Create a db.env file in the same directory as your docker-compose.yml file
-
-```bash
-$ nano db.env
-```
-
-Add the following environment variables
-
-```ini
-POSTGRES_USER=nextcloud
-POSTGRES_PASSWORD=$replace_me!$
-POSTGRES_DB=nextcloud
 ```
 
 ## Start containers
@@ -400,84 +362,6 @@ server {
 
 TODO: Fill in!
 
-### Tautulli Setup
-
-Go through the welcome screens to configure. You might have to access via your local network (eg. 192.168.1.XXX:8181). Mostly, just enter your plex username and password and pick which plex server you want to track.
-
-#### Enable reverse proxy
-
-Settings -> Web Interface -> Show Advanced
-
-Check the boxes for `Enable HTTP Proxy` and `Enable HTTPS`.
-
-Enable the provided tautulli sample conf file.
-
-```bash
-$ cd /opt/appdata/letsencrypt/nginx/proxy-confs
-$ mv tautulli.subfolder.conf.sample tautulli.subfolder.conf
-```
-
-### Nextcloud setup
-
-### Setup reverse proxy
-
-Enable the provided nextcloud sample conf file.
-
-```bash
-$ cd /opt/appdata/letsencrypt/nginx/proxy-confs
-$ mv nextcoud.subdomain.conf.sample nextcloud.subdomain.conf
-```
-
-I had to change the proxy_max_temp_file_size to 1024m. I believe this is Raspberry Pi 2 specific. Try with default setting on a Raspberry Pi 3.
-
-From
-
-```ini
-proxy_max_temp_file_size 2048m;
-```
-
-to
-
-```ini
-proxy_max_temp_file_size 1024m;
-```
-
-#### Edit nextcloud config.php
-
-Edit the nextcloud config file at `/opt/appdata/nextcloud/www/nextcloud/config/config.php`.
-
-Add this line to the trusted_domains array
-
-```
-    1 => 'nextcloud.austinmcconnell.me',
-```
-
-Add the following lines to the top-level config array
-
-```ini
-'overwrite.cli.url' => 'https://nextcloud.austinmcconnell.me',
-'overwritehost' => 'nextcloud.austinmcconnell.me',
-'overwriteprotocol' => 'https',
-```
-
-#### Security check
-
-To check the security of your private nextcloud server, visit [scan.nextcloud.com](scan.nextcloud.com).
-
-#### Theme
-
-I'm using the [nextcloud-breeze-dark]() theme. Clone it to the themes folder with the following command:
-
-```bash
-git clone https://github.com/mwalbeck/nextcloud-breeze-dark /opt/appdata/nextcloud/www/nextcloud/themes/nextcloud-breeze-dark
-```
-
-To enable the theme, add or change the theme option in your config.php to:
-
-```ini
-'theme' => 'nextcloud-breeze-dark',
-```
-
 ## Backup your AppData and Home folder
 
 We'll use [rclone](https://rclone.org) which is "rsync for cloud storage".
@@ -509,14 +393,6 @@ For Plex, we need to [backup](https://support.plex.tv/articles/201539237-backing
 rclone copy /opt/appdata/plex/Library/Application\ Support/Plex\ Media\ Server/Preferences.xml remote:raspberry-pi-backup/appdata/plex/ --progress
 ```
 
-### Nextcloud
-
-For nextcloud, the two main folders we need to backup are config and themes
-
-```bash
-rclone copy /opt/appdata/nextcloud/www/nextcloud/config remote:raspberry-pi-backup/appdata/nextcloud/config --progress
-rclone copy /opt/appdata/nextcloud/www/nextcloud/themes remote:raspberry-pi-backup/appdata/nextcloud/themes --progress
-```
 Backup the data
 TODO
 
@@ -529,12 +405,6 @@ It's only 5 MB. Just copy it all!
 
 ```bash
 rclone copy /opt/appdata/letsencrypt remote:raspberry-pi-backup/appdata/letsencrypt --copy-links --progress
-```
-
-### Tautulli
-
-```bash
-rclone copy /opt/appdata/tautulli remote:raspberry-pi-backup/appdata/tautulli --exclude logs --progress
 ```
 
 ### Cron
